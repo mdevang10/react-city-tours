@@ -1,0 +1,1035 @@
+<#import "/common/ftl/utilities.ftl" as lib>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+        <title>Circuit Search</title>
+        <link  href="${contextpath}/uui/espresso/static/vzbootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link  href="${contextpath}/uui/espresso/static/vzbootstrap/css/vzbootstrap.css"   rel="stylesheet" type="text/css">
+        <link  href="${contextpath}/uui/espresso/static/uiam/css/font-awesome.css" rel="stylesheet" type="text/css">
+        <link href="${contextpath}/uui/espresso/static/vzwebkit/css/thirdparty/jquery-ui/vz/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+        <link href="${contextpath}/uui/espresso/static/vzbootstrap/css/dataTables.bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css"  href="${contextpath}/uui/espresso/static/uiam/css/buttons.dataTables.min.css">
+        <link href="${contextpath}/uui/espresso/static/vzwebkit/js/thirdparty/DataTables-1.10.5/extensions/TableTools/css/dataTables.tableTools.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="${contextpath}/uui/espresso/static/vzbootstrap/css/bootstrap-multiselect.css" type="text/css" />
+        <link rel="stylesheet" href="${contextpath}/uui/espresso/static/vzbootstrap/css/multiselect-custom-style.css" type="text/css" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/Combobox.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/vzwebkit/css/extra/validationEngine.jquery.css" type="text/css"
+            rel="stylesheet">
+        <link href="${contextpath}/uui/espresso/static/uiam/css/jQuery-dialog.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/modal-popup.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/ute/css/ActivePanels.css" rel="stylesheet" type="text/css">
+        <link href="${contextpath}/uui/espresso/static/uiam/css/uiam_common.css" rel="stylesheet" type="text/css">
+        <link href="${contextpath}/uui/espresso/static/vzbootstrap/css/thirdparty/daterangepicker.css" rel="stylesheet" type="text/css">
+        <link  href="${contextpath}/uui/espresso/static/uiam/css/equipment/common.css"  type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css"  href="${contextpath}/uui/espresso/static/uiam/css/custom-style.css" />
+        <link href="${contextpath}/uui/espresso/static/vzbootstrap/css/flexgrid.css" rel="stylesheet" type="text/css">
+        <link href="${contextpath}/uui/espresso/static/uiam/css/search-common.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/common-compact.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/navTabs.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/listswap.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/entityBulkOps.css" type="text/css" rel="stylesheet" />
+        <link href="${contextpath}/uui/espresso/static/uiam/css/fundamental-features-styles.css" rel="stylesheet">
+        <script>
+            var CONTEXT_PATH = "${contextpath}";
+            var context_Path = '${ctxPath}';
+            var addOrderUrl = '${addOrderUrl!""}';
+            var checkOrderByTypeUrl = '${checkOrderByTypeUrl!""}';
+            var subnetworkTypesUrl = '${subnetworkTypesUrl!""}';
+            var networkTypeUrl = '${networkTypeUrl!""}';
+            var userID = '${userID!""}';
+            var firstName = "${firstname!''}";
+            var lastName = "${lastname!''}";
+            var encodedAuthHeader = '${encodedAuthHeader!""}';
+            var qtrailName = '${qtrailName!""}';
+            var ipsmUrl = '${ipsmUrl!""}';
+            var circuitSmartSearchV2Url = '${circuitSmartSearchV2Url!""}';
+            var circuitStatusUrl = '${circuitStatusUrl!""}';
+            var circuitTypeUrl = '${circuitTypeUrl!""}';
+            var circuitBandwidthUrl = '${circuitBandwidthUrl!""}';
+            var circuitSiteLocationUrl = '${circuitSiteLocationUrl!""}';
+            var instanceLocationEP = '${instanceLocationEP!""}';
+            var topologyEquipment = '${topologyEquipment!""}';
+            var userDomains = '${userDomains!""}';
+            var searchTrailId = '${trailId!""}';
+            var searchSiteId = '${siteId!""}';
+            var searchSiteName = '${siteName!""}';
+            var specAttributes = '${specAttributes!""}';
+            var trailAttributes = '${trailAttributes!""}';
+            var archiveSearchVal = '${archiveSearch!""}';
+            var commonAttrsUrl = '${commonAttrsUrl!""}';
+            var getDomainsDirect = '${getDomainsDirect!""}';
+            var MCD_postdata = '${MCD_postdata!""}';
+            var groomTool_postdata = '${groomTool_postdata!""}';
+            var changeOrderStatus_url = '${changeOrderStatus_url!""}';
+            var chngOdrSrvceDtls_url = '${chngOdrSrvceDtls_url!""}';
+            var circuit_modifyDesignPath_action_url = '${circuit_modifyDesignPath_action_url!""}';
+            var circuit_modifyDesignPath_activitycodelist_url = '${circuit_modifyDesignPath_activitycodelist!""}';
+            var VZID = '${userid}';
+            var contextPath = '${ctxPath!""}';
+            var random_unique_id = '${random_unique_id!""}';
+            var sysDomain = '${sysDomain!""}';
+            var entityPK = 'TRAIL%5FPK';
+            var trailAttributesBulkOperations = '${trailAttributesBulkOperations!""}';
+            var trailDomainsBulkOperations = '${trailDomainsBulkOperations!""}';
+            var getTopologyAttributeGroupNames = '${getTopologyAttributeGroupNames!""}';
+            var trailBulkUpdate = '${trailBulkUpdate!""}';
+            var trailBulkDelete = '${trailBulkDelete!""}';
+            var currEntityName = "TRAIL";
+            var segmentSearchURL = '${segmentSearchURL!""}';
+            var searchByOrderNumber = '${searchByOrderNumber!""}';
+            var bgwURL = '${bgwURL!""}';
+            window.onload = function () {
+                var title_var = document.title;
+                document.title = title_var;
+            }
+        </script>
+        <style>
+            #archiveSearchGrp .checkbox input#archiveSearch,
+            #archiveSearchGrp .checkbox input#archiveSearch+label {
+                pointer-events: none !important;
+                opacity: 0.3;
+                border-color: #ccc !important;
+            }
+
+            #modifyDesignPathDlg {
+                border: 0;
+                width: 100%;
+                height: 100%;
+                overflow: visible;
+            }
+
+            #modifyDesignPathDlg {
+                display: none;
+            }
+
+            #modifyDesignPathDlg {
+                padding: 0;
+                z-index: 100;
+            }
+
+            .cmd_lbl_lft {
+                width: 140px;
+                text-align: right;
+                float: left;
+                padding-top: 5px;
+            }
+
+            .cmd_lbl_rt {
+                width: 90px;
+                text-align: right;
+                float: left;
+                padding-top: 5px;
+            }
+
+            .cmd_input_lft {
+                width: 250px;
+            }
+
+            .cmd_input_rt {
+                width: 210px;
+            }
+
+            .vzuui-form textarea {
+                height: auto !important;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .inputMargin {
+                margin-left: 15px !important;
+                margin-right: 15px !important;
+            }
+
+            .cnmd_btn_dv {
+                text-align: center;
+                clear: both;
+                padding: 15px;
+            }
+
+            .vzuui-btn-red:hover,
+            .vzuui-btn-red-active,
+            .vzuui-btn-red-disabled {
+                background-color: #890000 !important;
+                cursor: pointer;
+            }
+
+            .vzuui-btn-gray:hover,
+            .vzuui-btn-gray-active,
+            .vzuui-btn-gray-disabled {
+                background: #D6D8D9 !important;
+                color: #4E4E52;
+                cursor: pointer;
+            }
+
+            .vzuui-btn-red,
+            .vzuui-btn-red-active,
+            .vzuui-btn-red-disabled {
+                background-color: #b00000;
+                border: 1px solid #890000;
+                color: white;
+                font-weight: bold;
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                -ms-border-radius: 3px;
+                padding: 10px 20px 10px 20px;
+            }
+
+            .saveedit,
+            .closeedit {
+                display: inline;
+            }
+
+            .saveedit,
+            .publishmode {
+                position: relative;
+                content: " ";
+                height: 31px;
+                box-shadow: none;
+                border: 1px solid #890000 !important;
+                padding-top: 6px;
+            }
+
+            textarea {
+                -webkit-appearance: textarea;
+                background-color: white;
+                -webkit-rtl-ordering: logical;
+                flex-direction: column;
+                resize: auto;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+
+            .vzuui-btn-gray:hover,
+            .vzuui-btn-gray-active,
+            .vzuui-btn-gray-disabled {
+                background: #4B4B4B !important;
+                color: #FFF;
+                ;
+                cursor: pointer;
+            }
+
+            .ui-dialog .ui-dialog-titlebar-close {
+                background-color: transparent !important;
+                border: 0px !important;
+            }
+
+            .diversity-flag i {
+                margin-left: 35%;
+                font-size: 1.7em;
+                color: coral;
+            }
+
+            .delete-progress {
+                text-align: right;
+                float: left;
+            }
+        </style>
+    </head>
+
+    <body style="height: auto; overflow-x: hidden;">
+        <#if header?? && header=='true'>
+            <header class="vz-global-header">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+
+                        <!-- mega menu starts -->
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#"><span></span></a>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </#if>
+        <div id="alert-container" class="alert-container-close"></div>
+        <div id="modal"></div>
+        <div class="container-fluid">
+            <div class="col-md-12" style="top:5px;">
+                <div class="panel-group clearfix " id="accordion" role="tablist" aria-multiselectable="true">
+                    <div>
+                        <div class="refersh-container" style="margin-top:10px">
+                            <span id="pageTitle">Circuit Search</span>
+                            <a id="refresh_tasks" class="vzuui-middle-ribbon-refresh" title="Refresh Tasks"></a>
+                            <img src="/uuigui/uui/espresso/static/ute_admin/css/images/Help.png"
+                                style="display: inline-block; margin-top: 0px;  margin-right: 20px;float: right;"
+                                onclick="" title="Help" height="25" width="25">
+                        </div>
+                        <hr style="margin-top:0; border-top:2px solid #eee">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 25px;">
+                <div id="searchNotice" style="display:none; position:absolute; left:20px; top:100px;"
+                    class="alert alert-danger" role="alert">
+                    Please enter at least two characters
+                </div>
+                <div class="col-md-6 col-md-offset-3">
+                    <form role="form" id="trailSearchForm" onsubmit="event.preventDefault();">
+                        <div class="input-group">
+                            <input type="text" class="validate[required] form-control" placeholder="Search"
+                                autocomplete="off" id="trailSearchInput" name="field-keywords">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-xs" type="button"
+                                    onclick="trailSearchJson(trailIDVal);" id="btn_trailSearch">
+                                    Search
+                                </button>
+                            </span>
+                        </div>
+
+                    </form>
+                    <div class="col-sm-12" style="margin-top: 0px; margin-left:23%;">
+                        <span style="color:gray; white-space: nowrap;">(Search Hint: ',' = OR, 'Space' = AND, '*' =
+                            WILDCARD, Circuit ID)</span>
+                        <div id="searchNotice" style="display:none; position:absolute; float:left;"
+                            class="alert alert-danger" role="alert">
+                            Please enter at least two characters
+                        </div>
+                    </div>
+                </div>
+                <input type="button" id="createCircuitPath_btn" value="Create Circuit Path"
+                    class="btn btn-primary btn-sm" style="padding-top: 0;display:none;">
+            </div>
+            <div id="advanced-search-row" class="col-md-12 accordion">
+                <!-- Accordion -->
+                <div class="panel-group clearfix" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="" role="button" style="display:none;" id="advancedSearchPanelLink"
+                                    data-toggle="collapse" href="#advancedSearchPanel" aria-expanded="true"
+                                    aria-controls="advancedSearchPanel">
+                                    Advanced Search
+                                </a>
+
+                                <a class="" role="button" style="display:none;" id="advancedSearchPanelVztvLink"
+                                    data-toggle="collapse" href="#advancedSearchPanelVztv" aria-expanded="true"
+                                    aria-controls="advancedSearchPanel">
+                                    Advanced Search
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="advancedSearchPanelVztv" style="display:none;" class="panel-collapse collapse in"
+                            role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div id="advancedSearchContainer" class="container-fluid" style="padding:0;">
+                                    <div id="searchCriteriaGrid" class="gridData">
+                                        <h3 data-order="1" selected=true>Circuit Path ID</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="circuitName"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input type="hidden" id="circuitNameID" class="rest clearable-field">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="2" selected=true>Site Name</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="circuitLocation"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden"
+                                                    id="circuitLocationID">
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="3" selected=true>Status</h3>
+                                        <div>
+                                            <div class="" id="circuitStatusWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitStatus"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="4" selected=true>Type</h3>
+                                        <div>
+                                            <div class="" id="circuitTypeWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitType"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="5" selected=true>Bandwidth</h3>
+                                        <div>
+                                            <div class="" id="circuitBandwidthWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitBandwidth"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- NTVC 245 Addition of new fields - START -->
+                                        <h3 data-order="6" selected=true>Trail Alias</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="trailAlias"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="trailAliasID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="7" selected=true>Project Id/NFID</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="projectId"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="projectNfid">
+                                            </div>
+                                        </div>
+                                        <!-- NTVC 245 Addition of new fields - END -->
+
+                                        <!-- 6_19 Addition of new fields - START -->
+
+                                        <h3 data-order="8" selected=true>Network Id</h3>
+                                        <div>
+                                            <div class="" id="circuitNetworkIDWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitNetworkID"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="9" selected=true>Sub Network Id</h3>
+                                        <div>
+                                            <div class="" id="circuitSubNetworkIDWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitSubNetworkID"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="10" selected=true>Sub Type</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="subType"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="subType">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="11" selected=true>Logical TID</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="logicalTid"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="logicalTid">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h3 data-order="12" selected=true>Passthrough</h3>
+                                            <div class="" style="position:relative">
+                                                <input type="checkbox" value="" id="passThrough">
+                                                <label for="passThrough" style="top:-23px"></label>
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="13" selected=true>Segment Name</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="segmentName"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="segmentName">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="14" selected=true>Customer Name</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="customerName"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="customerName">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="15" selected=true>Physical TID</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="physicalTid"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="physicalTid">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h3 data-order="16" selected=true>Passthrough</h3>
+                                            <div class="" style="position:relative">
+                                                <input type="checkbox" value="" id="physicalPassThrough">
+                                                <label for="physicalPassThrough" style="top:-23px"></label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 data-order="17" selected=true>Sub-Circuit Name</h3>
+                                            <div>
+                                                <div class="" style="position:relative">
+                                                    <input type="text" id="subCircuitName"
+                                                        class="form-control callrest clearable-field"> <label
+                                                        class="esinputLoader"></label>
+                                                    <input class="rest clearable-field" type="hidden"
+                                                        id="subCircuitName">
+                                                </div>
+                                            </div>
+                                            <h3 data-order="18" selected=true>Region</h3>
+                                            <div>
+                                                <div id="regionWrapper">
+                                                    <select class="callrest" id="region" style="width:100%">
+                                                        <option hidden disabled selected value></option>
+                                                        <option value="INTER">Inter</option>
+                                                        <option value="INTRA">Intra</option>
+                                                        <option value="BOTH">Both</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- 6_19 Addition of new fields - END -->
+                                    <div id="circuit-search-btn-block" class="row">
+                                        <div class="col-md-12" style="padding:0;">
+                                            <a id="advancedCircuitSearchBtn" role="button"
+                                                class="btn btn-danger btn-sm searchData"
+                                                style="margin-left: 20px;">Search</a>
+                                            <a id="advancedCircuitSearchCancelBtn" role="button" onclick="resetForm();"
+                                                class="btn btn-default  btn-sm clear-form">Reset</a>
+
+                                            <div id="showResult-wrapper" style="float:right;">
+                                                <div class="form-group">
+                                                    <label for="showResultSel" style="">Retrieve Results:</label>
+                                                    <select id="showResultSel">
+                                                        <option value=10 selected>10</option>
+                                                        <option value=25>25</option>
+                                                        <option value=50>50</option>
+                                                        <option value=100>100</option>
+                                                        <option value=250>250</option>
+                                                        <option value=500>500</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="advancedSearchPanel" style="display:none;" class="panel-collapse collapse in"
+                            role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div id="advancedSearchContainer" class="container-fluid" style="padding:0;">
+                                    <div id="searchCriteriaGrid" class="gridData">
+                                        <h3 data-order="1" selected=true>Circuit Path ID</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="circuitName"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input type="hidden" id="circuitNameID" class="rest clearable-field">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="2" selected=true>Site Name</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="circuitLocation"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden"
+                                                    id="circuitLocationID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="3" selected=true>City</h3>
+                                        <div>
+                                            <div class="" id="CityWrapper">
+                                                <!-- <select class="callrest multiselect-clearable" id="city-sel" multiple="multiple" style="min-width:350px"></select>-->
+
+                                                <input type="text" id="city-sel"
+                                                    class="form-control callrest clearable-field">
+                                                <input class="rest clearable-field" type="hidden" id="city-selID">
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="4" selected=true>Status</h3>
+                                        <div>
+                                            <div class="" id="circuitStatusWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitStatus"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="5" selected=true>Type</h3>
+                                        <div>
+                                            <div class="" id="circuitTypeWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitType"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="6" selected=true>Bandwidth</h3>
+                                        <div>
+                                            <div class="" id="circuitBandwidthWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitBandwidth"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="7" selected=true>Network Domain</h3>
+                                        <div>
+                                            <div class="" id="circuitDomainWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitDomain"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="8" selected=true>Network ID</h3>
+                                        <div>
+                                            <div class="" id="circuitNetworkIDWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitNetworkID"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="9" selected=true>Sub Network ID</h3>
+                                        <div>
+                                            <div class="" id="circuitSubNetworkIDWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitSubNetworkID"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--<h3 data-order="10" selected=true>Protection Type</h3>
+                                        <div>
+                                            <div class="" id="circuitProtectionTypeWrapper">
+                                                <select class="callrest multiselect-clearable" id="circuitProtectionType" multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <h3 data-order="11" selected=true>User Domains</h3>
+                                        <div>
+                                            <div class="" id="domainNames-selWrapper">
+                                                <select class="callrest rest" id="domainNames-sel" multiple="multiple"
+                                                    style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="12" selected=true>Date Type/Range</h3>
+                                        <div>
+                                            <div class="col-md-6" style="padding: 0px;">
+                                                <div class="dropdown vzbs-dropdown  ">
+                                                    <input class="callrest clearable-field" id="datetype" type="hidden">
+                                                    <button id="dateRangeBtn" class="btn dropdown-toggle" type="button"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                                                        style="margin:0;">Select Type <span
+                                                            class="vzcaret"></span></button>
+                                                    <ul class="dropdown-menu" id="datetype_menu"
+                                                        aria-labelledby="dropdownMenu1">
+                                                        <li value="CREATED_TIMESTAMP">CREATED</li>
+                                                        <li value="DECOMMISION_DATE">DECOMMISSIONED</li>
+                                                        <li value="DUE_DATE">DUE</li>
+                                                        <li value="INEFFECT_DATE">IN EFFECT</li>
+                                                        <li value="INSTALLATION_DATE">INSTALLED</li>
+                                                        <li value="ORDER_RECEIVED_DATE">RECEIVED</li>
+                                                        <li value="SCHEDULDED_DATE">SCHEDULDED</li>
+                                                        <li value="UPDATED_TIMESTAMP">UPDATED</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" style="padding: 0px;">
+                                                <div class="">
+                                                    <div class="fa-calendar1">
+                                                        <!--<input class="daterangepicker_input callrest" type="hidden" id="circuitEndDate" />-->
+                                                        <input class="daterangepicker_input callrest clearable-field"
+                                                            type="text" id="circuitDate" style="height:25px;" />
+                                                        <i class="glyphicon glyphicon-calendar calendarIcon fa fa-calendar"
+                                                            style="top:4px;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3 data-order="13" selected=true>A Site</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="circuitASite"
+                                                    class="form-control callrest clearable-field"><label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="circuitASiteID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="14" selected=true>Z Site</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="circuitZSite"
+                                                    class="form-control callrest clearable-field"><label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="circuitZSiteID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="15" selected=true>A Equipment</h3>
+                                        <div>
+                                            <div class="">
+                                                <input type="text" id="circuitAEquipment"
+                                                    class="form-control callrest clearable-field">
+                                                <input class="rest clearable-field" type="hidden"
+                                                    id="circuitAEquipmentID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="16" selected=true>Z Equipment</h3>
+                                        <div>
+                                            <div class="">
+                                                <input type="text" id="circuitZEquipment"
+                                                    class="form-control callrest clearable-field">
+                                                <input class="form-control rest clearable-field" type="hidden"
+                                                    id="circuitZEquipmentID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="17" selected=true>Group Name</h3>
+                                        <div>
+                                            <div class=" callrest" id="groupname-selWrapper">
+
+                                                <select class="callrest multiselect-clearable" id="groupname-sel"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="18" selected=true>Attribute Name</h3>
+                                        <div>
+                                            <div class=" callrest" id="attrname-selWrapper">
+                                                <select class="callrest multiselect-clearable" id="attrname-sel"
+                                                    multiple="multiple" style="min-width:350px">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <h3 data-order="19" selected=true>Attribute Values</h3>
+                                        <div>
+                                            <div id="attrValueList"></div>
+                                        </div>
+                                        <h3 data-order="20" selected=true>Trunk Group</h3>
+                                        <div>
+                                            <div class="">
+                                                <input type="text" id="trunkGroup"
+                                                    class="form-control callrest clearable-field">
+                                                <input class="form-control rest clearable-field" type="hidden"
+                                                    id="trunkGroupID">
+                                            </div>
+                                        </div>
+                                        <!-- NTVC 245 Addition of new fields - START -->
+                                        <h3 data-order="21" selected=true>Trail Alias</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="trailAlias"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="trailAliasID">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="22" selected=true>Project Id/NFID</h3>
+                                        <div>
+                                            <div class="" style="position:relative">
+                                                <input type="text" id="projectId"
+                                                    class="form-control callrest clearable-field"> <label
+                                                    class="esinputLoader"></label>
+                                                <input class="rest clearable-field" type="hidden" id="projectNfid">
+                                            </div>
+                                        </div>
+                                        <h3 data-order="23" selected=true>Assignments</h3>
+                                        <div>
+                                            <div class=" callrest" id="assignment-selWrapper">
+                                                <select class="callrest multiselect-clearable" id="assignment-sel"
+                                                    style="min-width:350px">
+                                                    <option value="">None Selected</option>
+                                                    <option value="Fixed">Fixed</option>
+                                                    <option value="Dynamic">Dynamic</option>
+                                                    <option value="Virtual">Virtual</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- NTVC 245 Addition of new fields - END -->
+                                        <h3 data-order="24" selected=true>Region</h3>
+                                        <div>
+                                            <div id="regionWrapper">
+                                                <select class="callrest" id="region" style="width:100%">
+                                                    <option hidden disabled selected value></option>
+                                                    <option value="INTER">Inter</option>
+                                                    <option value="INTRA">Intra</option>
+                                                    <option value="BOTH">Both</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="circuit-search-btn-block" class="row">
+                                        <div class="col-md-12" style="padding:0;">
+                                            <a id="advancedCircuitSearchBtn" role="button"
+                                                class="btn btn-danger btn-sm searchData"
+                                                style="margin-left: 20px;">Search</a>
+                                            <a id="advancedCircuitSearchCancelBtn" role="button" onclick="resetForm();"
+                                                class="btn btn-default  btn-sm clear-form">Reset</a>
+
+                                            <div id="showResult-wrapper" style="float:right;">
+                                                <div class="form-group">
+                                                    <label for="showResultSel" style="">Retrieve Results:</label>
+                                                    <select id="showResultSel">
+                                                        <option value=10>10</option>
+                                                        <option value=25>25</option>
+                                                        <option value=50>50</option>
+                                                        <option value=100 selected>100</option>
+                                                        <option value=250>250</option>
+                                                        <option value=500>500</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="result" class="panel panel-default" style="display:none;">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="" role="button" data-toggle="collapse" href="#circuitResults"
+                                    aria-expanded="true" aria-controls="circuitResults">
+                                    Results
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="circuitResults" class="panel-collapse collapse in" role="tabpanel"
+                            aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="col-md-12" id="trailResultsWrapper" style="padding-left:0;padding-right:0;">
+                                    <div id="savePreferenceBlock"
+                                        style="position:absolute;z-index:99;right:0;width:50%;">
+                                        <div style="float:right;text-align:right;" class="col-md-6" id="showHideCols">
+                                            <label class="col-md-5" style="line-height:1.2;margin-top:8px;">Show/Hide
+                                                Columns: </label>
+
+                                            <select class="callrest multiselect-clearable userPreference"
+                                                id="columnsDisplay-sel" multiple="multiple" style="min-width:10pt">
+                                            </select>
+                                        </div>
+                                        <div style="float:right;text-align:right;padding-left:0;" class="col-md-1.2"
+                                            id="resetPreferenceControls">
+                                            <a style="float:left;" id="resetPreferenceBtn"
+                                                class="btn btn-sm btn-default" role="button">Reset Preferences</a>
+                                        </div>
+                                        <div style="float:right;text-align:right;padding-right:0;" class="col-md-1.2"
+                                            id="savePreferenceControls">
+                                            <a style="margin-left: -54px;" id="savePreferenceBtn"
+                                                class="btn btn-sm btn-danger" role="button">Save Preferences</a>
+                                        </div>
+                                    </div>
+                                    <!-- BASIC SEARCH TABLE -->
+                                    <table SearchResultsTable id="trailSearchResult" style=""
+                                        class="table table-striped table-hover" style="width:100% !important;">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="page-import-bay${random_unique_id}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="strip">
+            <ul></ul>
+        </div>
+        <div id="modifyDesignPathDlg">
+            <form id="modifyDesignPathForm" style="width:100%" class="vzuui-form">
+                <br />
+                <div class="formdiv">
+                    <div class="cmd_lbl_lft"><span><label><strong>Reason Code:</strong><span
+                                    style="color:#f00;">*</span></label></span></div>
+                    <select id="mdpReasonCode" name="Reason Code"
+                        class="validate[required] cmd_input_lft inputMargin"></select>
+                </div>
+
+                <div class="formdiv">
+                    <div class="cmd_lbl_lft"><span><label><strong>Comments :</strong><span
+                                    style="color:#f00;">*</span></label></span></div>
+                    <textarea rows="8" cols="80" class="validate[required] inputMargin" name="comments"
+                        id="mdpComments"></textarea>
+                </div>
+                <div class="cnmd_btn_dv">
+                    <button class="vzuui-btn-red saveedit submitBtn" type="button" id="mdpSubmit">Submit</button>
+                    <button class="vzuui-btn-gray saveedit cancelBtn" type="button" id="mdpClose">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal fade in" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="false" style="display: none;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">X</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Confirm Cancel</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><b>Are you sure you want to cancel order<span id="revisionNumber"></span>?</b></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" id="okBtn">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="deleteTrailSearchModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="deleteTrailModalTitle" class="modal-title">Select Archive Status</h4>
+                    </div>
+                    <div id="deleteTrailModalBody" class="modal-body" style="height:200px;">
+                        <b>Select Archive Status For Circuit Paths Being Deleted</b><br><br>
+                        <label>Status</label>
+                        <select class="callrest multiselect-clearable" id="circuitOrderStatus"
+                            style="min-width: 209px;">
+                        </select>
+                    </div>
+                    <div class="modal-footer" style="align:center !important;">
+                        <button id="search" type="button" class="btn btn-sm btn-danger decomission-or-cancel"
+                            onClick="startDelete()">Ok</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+                        <div class="delete-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">X</span></button>
+                        <h4 class="modal-title" id="errorModalHeader"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errorModalMessage"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" id="okBtn"
+                            data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showRelatedCircuitsDialog" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="document" style="width:80%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            onclick="destroyRelatedCircuitTable()"><span aria-hidden="true">x</span></button>
+                        <h4 class="modal-title" id="myRelatedCircuitLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="relatedCircuitsTable" class="table table-striped table-hover" width="100%">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                        <hr>
+                        <h4 class="modal-title"> Cross Reference Circuits</h4>
+                        <table id="crossReferenceListTable" class="table table-striped table-hover" width="100%">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                        <div style="display: flex;justify-content: center;">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"
+                                onclick="destroyRelatedCircuitTable()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/jquery.min.js" type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/bootstrap.min.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/vzbootstrap.js" type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/bootstrap-multiselect.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/thirdparty/moment.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/thirdparty/daterangepicker.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/uiam/js/datatables-custom.min.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/dataTables.bootstrap.min.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/dataTables.responsive.min.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/responsive.bootstrap.min.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/extra/jquery-ui-1.10.4.custom.js"
+            type="text/javascript"></script>
+        <script
+            src="${contextpath}/uui/espresso/static/vzwebkit/js/thirdparty/DataTables-1.10.5/extensions/ColReorder/js/dataTables.colReorder.js"
+            type="text/javascript"></script>
+        <script
+            src="${contextpath}/uui/espresso/static/vzwebkit/js/thirdparty/DataTables-1.10.5/extensions/ColResize/js/colResize.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/extra/prettyCheckable.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/thirdparty/mousetrap.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/common/common.js" type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/extra/jquery.validationEngine.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/extra/jquery.validationEngine-en.js"
+            type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/common/js/GenericLogHelper.js"></script>
+        <script src="${contextpath}/uui/espresso/static/vzbootstrap/js/flexgrid.js"></script>
+        <script src="${contextpath}/uui/espresso/static/uiam/js/jquery.listswap.js" type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/uiam/js/entityBulkOps.js"></script>
+        <script src="${contextpath}/uui/espresso/static/vzwebkit/js/extra/popup.js" type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/uiam/js/equipment/statusPopup.js"></script>
+        <script src="${contextpath}/uui/espresso/static/uiam/js/rum.js" type="text/javascript"></script>
+        <script src="${contextpath}/uui/espresso/static/uiam/js/rumSnippetUatProd.js" type="text/javascript"></script>
+
+        <script>
+            $(document).on('click', '#datetype_menu li:first', function () {
+                $('#dateRangeBtn').html('Select Dates <span style="top:4px;" class="vzcaret"></span>');
+            });
+            //collapse advance search 
+            function loadDynamicFile(fileType, filename) {
+                if (fileType == 'js') {
+                    var fileRef = document.createElement('script');
+                    fileRef.setAttribute("type", "text/javascript");
+                    fileRef.setAttribute('src', filename);
+                    document.getElementsByTagName('head')[0].appendChild(fileRef);
+                }
+            }
+
+            if (sysDomain.toUpperCase() === 'VZT') {
+                $("#advanced-search-row .panel-heading a").addClass("collapsed");
+                $("#advancedSearchPanelVztv").css("height", "0px")
+                $("#advancedSearchPanelVztv").attr("aria-expanded", "false");
+                $("#advancedSearchPanelVztv").removeClass("in");
+                loadDynamicFile("js", "${contextpath}/uui/espresso/static/uiam/js/trailSearchVztv2.js");
+            } else {
+                loadDynamicFile("js", "${contextpath}/uui/espresso/static/uiam/js/trailSearchv2.js");
+            }
+            var user_privileges = [];
+                    $(document).ready(function(){
+                <#list user.roles as role>
+                    user_privileges.push('${role!""}');
+                </#list>
+            });
+
+        </script>
+
+    </body>
+    </html>
